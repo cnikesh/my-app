@@ -39,9 +39,13 @@ jobs:
         with:
           name: build
           path: build
-      - run: npm install -g surge
       - name: ZIP Assets
         if: github.event_name == 'push' && github.ref == 'refs/heads/master'
         run: |
           zip -r build.zip ./build 
           zip -r coverage.zip ./coverage
+      - run: npm install -g surge
+      - name: Deploy to Staging  
+        if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
+        run: npx surge --project ./build --domain powerful-day.surge.sh
+      
