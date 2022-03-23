@@ -48,4 +48,7 @@ jobs:
       - name: Deploy to Staging  
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: npx surge --project ./build --domain powerful-day.surge.sh
+        env:
+          SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
+          SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
       
