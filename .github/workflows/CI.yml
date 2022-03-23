@@ -47,10 +47,12 @@ jobs:
           zip -r build.zip ./build 
           zip -r coverage.zip ./coverage
       - run: npm install -g surge
-      - name: Deploy to Staging  
+      - name: Deploy to Staging Server  
         if: github.event_name == 'push' && github.ref == 'refs/heads/develop'
         run: npx surge --project ./build --domain powerful-day.surge.sh
         env:
           SURGE_LOGIN: ${{ secrets.SURGE_LOGIN}}
           SURGE_TOKEN: ${{ secrets.SURGE_TOKEN}}
-      
+      - name: Deploy to Production Server  
+        if: github.event_name == 'push' && github.ref == 'refs/heads/master'
+        run: npx surge --project ./build --domain automatic-cook.surge.sh
